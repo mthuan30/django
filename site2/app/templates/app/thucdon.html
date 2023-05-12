@@ -1,0 +1,270 @@
+{% extends 'app/trangchu.html' %}
+{% load static %}
+{% block main-content %}
+<div class="title">
+    <h3>Danh sách món ăn</h3>
+    </div>
+<div class="container-fluid body">
+    <ul class="nav nav-tabs" role="tablist">
+      <li class="nav-item m-3">
+        <a class="nav-link active" data-bs-toggle="tab" href="#monan">Món ăn</a>
+      </li>
+      <li class="nav-item m-3">
+        <a class="nav-link" data-bs-toggle="tab" href="#loaimon">Loại món ăn</a>
+      </li>
+    </ul>
+
+<!-- Tab panes -->
+<div class="tab-content">
+
+  <div id="monan" class="tab-pane active"><br>
+    <div class="row">
+      
+        <div class="row">
+        <div class="col mt-3">
+            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#myModalThem">Thêm</button>
+            
+        </div>
+        
+        </div>
+        <div class="container">
+        
+        
+        <div class="table-responsive">
+          <table class="table table-bordered mt-3">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Ảnh minh họa</th>
+                <th>Mã</th>
+                <th>Tên</th>
+                <th>Loại</th>
+                
+                
+                <th>Giá tiền</th>
+                
+                <th>Chọn</th>
+                
+                
+              </tr>
+            </thead>
+            <tbody>
+              
+              {% if monans %}
+              {% for monan in monans %}
+              <tr>
+                
+                <td>{{ forloop.counter }}</td>
+                <td>
+                  <img style="width:120px;height:auto;" src="/img/{{monan.anh}}" class="card-img-top" alt="...">
+              </td>
+                <td>{{monan.id}}</td>
+                <td>{{monan.tenmon}}</td>
+                <td>{{monan.loaimon.tenloai}}</td>
+                <td>{{monan.giatien|floatformat:3}}</td>
+                <td>
+                  <a href="{% url 'suamon' monan.id %}" class="btn btn-warning">Sửa</a>
+                  <button type="button" data-id="{{ monan.id }}" class="btn btn-danger xoamonname" data-bs-toggle="modal" data-bs-target="#myModalXoa">Xóa</button>
+               
+
+                </td>
+                
+              </tr>
+              {% endfor %}   
+            {% endif %}
+           
+            </tbody>
+          </table>
+        </div>
+        </div>
+
+      </div>
+    </div>
+
+    
+  <div id="loaimon" class="tab-pane"><br>
+    <div class="row">
+        
+      <div class="row">
+        <div class="col mt-3">
+            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#myModalThemloai">Thêm</button>
+            
+            
+        </div>
+        
+        </div>
+        <div class="container">
+        <div class="table-responsive">
+          <table class="table table-bordered mt-3">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Mã loại</th>
+                <th>Tên loại</th>
+                <th>Chọn</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% if loaimons %}
+              {% for loaimon in loaimons %}
+              <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{loaimon.id}}</td>
+                <td>{{loaimon.tenloai}}</td>
+                <td>
+                  <a href="{% url 'sualoai' loaimon.id %}" class="btn btn-warning">Sửa</a>
+                  <button type="button" data-id="{{ loaimon.id }}" class="btn btn-danger xoaloainame" data-bs-toggle="modal" data-bs-target="#myModalXoaloai">Xóa</button>
+                </td>
+              </tr>
+              {% endfor %}  
+              {% endif %} 
+            </tbody>
+          </table>
+        </div>
+        </div>
+
+    </div>
+  </div>
+
+     </div>
+<footer>
+  
+</footer>
+
+<!-- The Modal Them -->
+<div class="modal fade" id="myModalThem">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+              <h4 class="modal-title">Thêm</h4>
+              {% if er %}
+        <p style="color: red">{{ er }}</p>
+        {% endif %}
+              <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <!-- Modal body -->
+      <div class="modal-body">
+        <form id="themmon" method="post" class="md-6 p-3 mg-3 form" enctype="multipart/form-data">
+          {% csrf_token %}
+            
+          <div class="form-groud py-2">
+            {{formmon.anh}}
+          </div>
+            <div class="form-groud py-2">
+              {{formmon.tenmon}}
+            </div>
+            
+           
+          
+            <select class="form-select" id="loai-select" name="loai-select">
+              {% for loaimon in loaimons %}
+              <option value="{{loaimon.id}}">{{loaimon.tenloai}}</option>
+              {% endfor %}  
+            </select>
+            <div class="form-groud py-2">
+              {{formmon.giatien}}
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-success" name="themmon" data-bs-dismiss="modal">Xác nhận</button>
+              <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Hủy</button>
+            </div>
+          </form>
+      </div>
+            <!-- Modal footer -->
+            
+            </div>
+            </div>
+    </div>
+
+<!-- The Modal Xoa -->
+<div class="modal fade" id="myModalXoa">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+              <h4 class="modal-title">Bạn có chắc chắn xóa bạn đã chọn</h4>
+              <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <!-- Modal body -->
+  <div class="modal-body">
+    <form id="xoamon" class="md-6 p-3 mg-3 form" method="post">
+      {% csrf_token %}
+        <input type="hidden" name="xoa-mon" id="mon-id">
+        <div class="modal-footer">
+          <button type="submit" name="xoamon" class="btn btn-success " data-bs-dismiss="modal">Có</button>
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Không</button>
+        </div>
+      </form>
+    </div>
+        
+        </div>
+        </div>
+  </div>
+            <!-- Modal footer -->
+            
+            </div>
+            </div>
+    </div>
+
+
+<!-- The Modal Them loai -->
+<div class="modal fade" id="myModalThemloai">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Thêm</h4>
+        {% if er %}
+        <p style="color: red">{{ er }}</p>
+        {% endif %}
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <!-- Modal body -->
+  <div class="modal-body">
+  <form id="themloai" class="md-6 p-3 mg-3 form" method="post">
+    {% csrf_token %}
+      <div class="form-groud py-2">
+        {{form.tenloai}}
+      </div>
+      <div class="modal-footer">
+        <button type="submit" id="add-button" name="themloai" class="btn btn-success" data-bs-dismiss="modal">Xác nhận</button>
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Hủy</button>
+      </div>
+    </form>
+  </div>
+      
+      </div>
+      </div>
+</div>
+<!-- The Modal Xoa loai -->
+<div class="modal fade" id="myModalXoaloai">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Bạn có chắc chắn xóa bạn đã chọn( Nếu xóa loại món các món ăn được liên kết với loại cũng sẽ bị xóa)</h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <!-- Modal body -->
+  <div class="modal-body">
+    <form id="xoaloai" class="md-6 p-3 mg-3 form" method="post">
+      {% csrf_token %}
+        <input type="hidden" name="xoa-loai" id="loai-id">
+        <div class="modal-footer">
+          <button type="submit" name="xoaloai" class="btn btn-success " data-bs-dismiss="modal">Có</button>
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Không</button>
+        </div>
+      </form>
+    </div>
+        
+        </div>
+        </div>
+  </div>
+      <!-- Modal footer -->
+      
+      </div>
+      </div>
+</div>
+
+{% endblock main-content %}

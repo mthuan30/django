@@ -1,0 +1,14 @@
+.tab-pane{
+    
+    padding-left: 0;
+   
+    margin-left: 0;
+}
+.goimon{
+    border-left: 1px solid #D3D3D3;
+    
+}
+.tt{
+    position: relative ;
+    left: 60%;
+}

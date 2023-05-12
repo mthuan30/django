@@ -1,0 +1,38 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Trang web bán hàng</title>
+  <link rel="stylesheet" href="{%static 'app/css/bootstrap.min.css' %}">
+  <link href="{%static 'app/css/main.css' %}" rel="stylesheet">
+</head>
+
+<body>
+  <div class="con">
+    <div class="row justify-content-around">
+      <form action="" class="col-md-6 p-3 mg-3 form" method="post">
+        {% csrf_token %}
+        <h1 class="text-center py-3 title">Lấy lại tài khoản</h1>
+        <div class="form-groud py-2">
+          <input type="email" name="email" id="email" class="form-control" placeholder="Email">
+        </div>
+        <input type="submit" value="Lấy lại mật khẩu" class="btn-primary btn btn-block">
+
+ 
+      </form>
+   </div>
+  </div>
+  
+  <div class="col-xs-2 col-sm-3 col-md-3 col-lg-4"></div>
+
+
+  </div>
+  <script src="{%static 'app/js/bootstrap.js' %}"></script>
+</body>
+
+</html>

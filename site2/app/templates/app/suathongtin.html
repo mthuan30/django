@@ -1,0 +1,51 @@
+{% extends 'app/trangchu.html' %}
+{% load static %}
+{% block main-content %}
+<div class="title">
+    <h3>Chỉnh sửa thông tin</h3>
+</div>
+<div class="container body">
+    <form action="" class="col-md-6 p-3 mg-3 form" method="post" >
+     
+        {% csrf_token %}
+
+<div class="col-lg">
+<div class="input-group">
+    <span class="input-group-text">Họ</span>
+    {{rf.last_name}}
+</div>
+<div class="input-group">
+    <span class="input-group-text">Tên</span>
+    {{rf.first_name}}
+</div>
+<div class="input-group">
+    <span class="input-group-text">Email</span>
+    {{rf.email}}
+</div>
+<div class="input-group">
+    <span class="input-group-text">SDT</span>
+    {{tf.sdt}}
+</div>
+<div class="input-group">
+    <span class="input-group-text">Mật khẩu</span>
+    {{rf.password1}}
+</div>
+<div class="input-group">
+    <span class="input-group-text">Nhập lại mật khẩu</span>
+    {{rf.password2}}
+</div>
+<div class="input-group">
+    <span class="input-group-text">Địa chỉ</span>
+    {{tf.diachi}}
+</div>
+<div class="input-group">
+    <span class="input-group-text">Tên quán</span>
+    {{tf.tenquan}}
+</div>
+<div class="col-lg-3 ">
+    <input type="submit" value="Hoàn tất" class="btn-success btn btn-block col-lg-10">
+</div>
+</form>
+</div>
+</div>
+{% endblock main-content %}

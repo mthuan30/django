@@ -1,0 +1,48 @@
+
+.con{
+    min-height: 700px;
+    background: url('../img/login.jpeg');
+    background-size: cover;
+    background-position-y:-100px ;
+}
+.form{
+    margin-top: 80px;
+    width: 500px;
+    min-height: 300px;
+    background: rgba(22, 45, 87, 0.8);
+    box-shadow: 0px 0px 17px 2px rgba(255, 255, 255, 0.8);
+}
+.title{
+    color: aliceblue;
+}
+.btn{
+    width: 100%;
+}
+
+.menu{
+    
+    min-height: 50px;
+    background: #4682B4;
+}
+.btn{
+    margin-top: 2px;
+}
+.dropdown-menu{
+    background-color: rgb(216, 197, 233);
+    box-shadow:3px 3px rgb(71, 54, 87);
+}
+.dropdown-item{
+    font-size: 20px;
+    
+}
+.name{
+    margin-top: 10px;
+}
+.body{
+    min-height: auto;
+    background: #99c465;
+}
+.inf{
+    font-size: large;
+}
+

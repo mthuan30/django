@@ -1,0 +1,40 @@
+{% extends 'app/trangchu.html' %}
+{% load static %}
+{% block main-content %}
+<div class="title">
+    <h3>Danh sách nguyên liệu</h3>
+    </div>
+  <div class="container-fluid body">
+    <div class="container mt-3">
+        <div class="table-responsive">
+          <table class="table table-bordered mt-3">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Tên hàng</th>
+                <th>Số lượng</th>
+                <th>Kiểu nhập</th>
+                <th>Ngày nhập</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% if tts %}
+              {% for tt in tts%}
+              <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{tt.nvl.tennvl}}</td>
+                <td>{{tt.soluongnhap}}</td>
+                <td>{{tt.kieunhap}}</td>
+                <td>{{tt.ngaynhap}}</td>
+                
+                
+              </tr>
+              {% endfor %}
+              {% endif %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+     </div>
+
+{% endblock main-content %}

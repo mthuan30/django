@@ -1,0 +1,91 @@
+{% extends 'app/trangchu.html' %}
+{% load static %}
+{% block main-content %}
+<div class="row title">
+  <div class="col-8">
+    <h3>Thanh toán đơn hàng</h3>
+  </div>
+  <div class="col-4">
+    <a href="{% url 'cuahang' %}" class="btn-danger btn btn-block col-lg-10">Trở về</a>
+  </div>
+  <div class="container-fluid body">
+    <h3>Hóa đơn</h3>
+   
+    
+     <div class="row">
+      <div class="col-5">
+          <span>Tên món</span>
+      </div>
+      <div class="col-3">
+        <span>SL</span>
+    </div>
+      <div class="col-4">
+          <span>Giá tiền</span>
+      </div>
+  </div>
+     <hr>
+
+{% for goimon in goimons %}
+     <div class="row">
+      <div class="col-5">
+          <span>{{goimon.mon.tenmon}}</span>
+      </div>
+      <div class="col-3">
+        <span>{{goimon.soluong}}</span>
+    </div>
+      <div class="col-4">
+          <span>{{goimon.gia | floatformat:3}}</span>
+      </div>
+  </div>
+{% endfor %}
+<hr>
+      <div class="row">
+          <div class="col-8">
+              <span>Thành tiền</span>
+          </div>
+          <div class="col-4">
+              <span>{{sum|floatformat:3}}</span>
+          </div>
+      </div>
+      <div class="row" id="phuongthuc">
+        <div class="col-5">
+              <h5>Phương thức thanh toán</h5>
+            </div>
+            <div class="col-7">
+                
+            </div>
+      </div>
+      <div class="row">
+        <div class="col-5">
+          <form method="post">
+            {% csrf_token %}
+            <div class="form-check col">
+              <input type="radio" class="form-check-input" id="radio1" name="loai" value="taiquay" checked>Tại quầy
+              <label class="form-check-label" for="radio1"></label>
+            </div>
+            <div class="form-check col">
+              <input type="radio" class="form-check-input" id="radio2" name="loai" value="mangdi">Mang đi
+              <label class="form-check-label" for="radio2"></label>
+            </div>
+            <div class="form-check col">
+              <input type="radio" class="form-check-input" id="radio3" name="loai" value="grab">Grab
+              <label class="form-check-label" for="radio3"></label>
+            </div>
+        
+        
+          <button type="submit" method="post" name="thanhtoan" class="btn btn-success thanhtoan">Thanh toán</button>
+          </form>
+            </div>
+      </div>
+  </div>
+  </div>
+
+
+ </div>
+      
+      
+    
+  
+</div>
+
+{% endblock main-content %}

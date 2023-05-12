@@ -1,0 +1,50 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Trang web bán hàng</title>
+  <link rel="stylesheet" type="text/css" href="{%static 'app/css/bootstrap.min.css' %}">
+  <link rel="stylesheet" type="text/css" href="{%static 'app/css/main.css' %}">
+  
+</head>
+
+<body>
+  <div class="con">
+    <div class="row justify-content-around">
+      <form action="" class="col-md-6 p-3 mg-3 form" method="post">
+        <h1 class="text-center py-3 title">Đăng nhập</h1>
+        {% if er %}
+    <p style="color: red">{{ er }}</p>
+    {% endif %}
+    {% csrf_token %}
+        <div class="form-groud py-2">
+          
+          {{rf.username}}
+        </div>
+        <div class="form-groud py-2">
+          {{rf.password}}
+          
+        </div>
+       
+        <div class="form-groud py-2">
+          <a href="{% url 'quenmk' %}">Forgot Password?</a>
+        </div>
+
+        <div class="form-groud py-2">
+            <span>Bạn chưa có tài khoản?</span>
+            <a href="{% url 'register' %}">Đăng ký ngay</a>
+        </div>
+        <input type="submit" value="Đăng nhập" class="btn-primary btn btn-block">
+
+  </form>
+  </div>
+  </div>
+  <script src="{%static 'app/js/bootstrap.js'%}"></script>
+  <script src="https://kit.fontawesome.com/6071e00c9f.js" crossorigin="anonymous"></script>
+</body>
+
+</html>

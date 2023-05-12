@@ -1,0 +1,93 @@
+{% extends 'app/trangchu.html' %}
+{% load static %}
+{% block main-content %}
+<div class="title">
+    <h3>Danh sách đơn hàng</h3>
+    </div>
+  <div class="container-fluid body">
+    
+    <div class="container mt-3">
+        
+        
+        <div class="table-responsive">
+          <table class="table table-bordered mt-3">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Mã đơn</th>
+                
+                
+                <th>Thành tiền</th>
+                <th>Loại</th>
+                <th>Ngày tạo đơn</th>
+                <th>Người tạo đơn</th>
+                <th>Chọn</th>
+                
+                
+              </tr>
+            </thead>
+            <tbody>
+              {% if donhangs %}
+              {% for donhang in donhangs%}
+              <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{donhang.id}}</td>
+                <td>{{donhang.thanhtien |floatformat:3}}</td>
+                <td>{{donhang.loai}}</td>
+                <td>{{donhang.thoigiantao}}</td>
+                <td></td>
+                <td>
+                  <a href="{% url 'ctdonhang' donhang.id %}" class="btn btn-primary col">Chi tiết</a>
+
+                  <button type="button" data-id="{{donhang.id}}" class="btn btn-danger xoadonhangname" data-bs-toggle="modal" data-bs-target="#myModalXoa">Xóa</button>
+                  
+                </td>
+                
+                
+              </tr>
+              {% endfor %}
+              {% endif %}
+            
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+     </div>
+<footer>
+  
+</footer>
+
+             <!-- The Modal Xoa -->
+      <div class="modal fade" id="myModalXoa">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+              <h4 class="modal-title">Vui lòng nhập mã PIN trước khi xóa!</h4>
+              <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <!-- Modal body -->
+  <div class="modal-body">
+    <form id="xoadon" name="xoadon" class="md-6 p-3 mg-3 form" method="post">
+      {% csrf_token %}
+        <input type="hidden" name="xoa-don" id="don-id">
+        
+        <div class="modal-footer">
+          <button type="submit" name="xoadon" class="btn btn-success " data-bs-dismiss="modal">Có</button>
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Không</button>
+        </div>
+      </form>
+    </div>
+        
+        </div>
+        </div>
+  </div>
+            <!-- Modal footer -->
+            
+            </div>
+            </div>
+            </div>
+
+              
+            {% endblock main-content %}

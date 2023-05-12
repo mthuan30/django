@@ -1,0 +1,220 @@
+{% extends 'app/trangchu.html' %}
+{% load static %}
+{% block main-content %}
+
+
+<div class="row title">
+  <div class="col-8">
+    <h3>Cửa hàng</h3>
+  </div>
+  
+    
+    </div>
+  <div class="container-fluid body">
+    
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs" role="tablist">
+          <li class="nav-item m-3">
+            <a class="nav-link active" data-bs-toggle="tab" href="#cuahang">Cửa hàng</a>
+          </li>
+          <li class="nav-item m-3">
+            <a class="nav-link" data-bs-toggle="tab" href="#checkin">Check-in</a>
+          </li>
+          <li class="nav-item m-3">
+            <a class="nav-link" data-bs-toggle="tab" href="#checkout">Check-out</a>
+          </li>
+        </ul>
+      
+        <!-- Tab panes -->
+        <div class="tab-content">
+
+          <div id="cuahang" class="container tab-pane active"><br>
+            <div class="row">
+            <div class="col-sm-9">
+                <ul class="nav nav-pills" role="tablist">
+                    <li class="nav-item">
+                      <a class="nav-link active" data-bs-toggle="tab" href="#{{loaimons.0.id}}">{{loaimons.0.tenloai}}</a>
+                    </li>
+                  {% for loaimon in loaimons|slice:"1:" %}
+                    <li class="nav-item">
+                      <a class="nav-link" data-bs-toggle="tab" href="#{{loaimon.id}}">{{loaimon.tenloai}}</a>
+                    </li>
+                    {% endfor %}
+                  </ul>
+                  <!-- Tab panes -->
+                  <div class="tab-content">
+                    <div id="{{loaimons.0.id}}" class="container tab-pane active"><br>
+                        <div class="row">  
+                        {% for thucdon in thucdons %}
+                          {% if loaimons.0 == thucdon.loaimon %}
+                              <div class="col-md-3">
+                                <div class="card">
+                                  <img src="/img/{{thucdon.anh}}" style="width:180px;height:150px;" class="card-img-top" alt="...">
+                                <div class="card-body text-center alert alert-primary">
+                                  <h5 class="card-title">{{thucdon.tenmon}}</h5>
+                                  <p class="card-text"><span class='text'>{{thucdon.giatien | floatformat:3}} VND</span></p>
+                                  <button type="submit" method="post" name="themgoimon" data-goimon-id="{{thucdon.id}}" class="btn btn-primary goimon">Thêm</button>
+
+                                  
+                                </div>
+                                </div>
+                              </div>
+                              {% else %}
+                          {% endif %}
+                        {% endfor %}   
+                    </div>
+                    </div>
+
+
+                    {% for loaimon in loaimons|slice:"1:" %}
+                    <div id="{{loaimon.id}}" class="container tab-pane fade"><br>
+                        <div class="row">  
+                          {% for thucdon in thucdons %}
+                          {% if loaimon == thucdon.loaimon %}
+                          <form method="POST">
+                              <div class="col-md-3">
+                                <div class="card">
+                                  <img src="/img/{{thucdon.anh}}" class="card-img-top" alt="...">
+                                <div class="card-body text-center alert alert-primary">
+                                  <h5 class="card-title">{{thucdon.tenmon}}</h5>
+                                  <p class="card-text"><span class='text'>{{thucdon.giatien | floatformat:3}} VND</span></p>
+                                  <button type="submit" name="themgoimon" data-goimon-id="{{thucdon.id}}" class="btn btn-primary goimon">Thêm</button>
+                                </div>
+                                </div>
+                              </div>
+                            </form>
+                            
+                              {% else %}
+                          {% endif %}
+                        {% endfor %}     
+                    </div>
+                    </div>
+                    {% endfor %}
+                    
+                    
+                    
+                  </div>
+                
+            </div>
+            <div class="col-sm-3">
+                  <!-- Tab panes -->
+                  
+                      <h3>Gọi món</h3>
+                      
+                      <div class="row">
+                      
+                      <hr>
+                   <div class="row">
+                    <div class="col-5">
+                        <span>Tên món</span>
+                    </div>
+                    <div class="col-3">
+                      <span>SL</span>
+                  </div>
+                    <div class="col-4">
+                        <span>Giá tiền</span>
+                    </div>
+                </div>
+                   <hr>
+                   {% if goimons %}
+                    {% for goimon in goimons %}
+                   <div class="row">
+                    
+                    <div class="col-5">
+                        <span>{{ forloop.counter }}. {{goimon.mon.tenmon}}</span>
+                    </div>
+                    <div class="col-3">
+                      <span>{{goimon.soluong}}</span>
+                  </div>
+                    <div class="col-4">
+                        <span>{{goimon.gia|floatformat:3}}</span>
+                    </div>
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+                
+                    <hr>
+                    <div class="row">
+                        <div class="col-9">
+                            <span>Thành tiền</span>
+                        </div>
+                        <div class="col-3">
+                            <span>{{sum|floatformat:3}}</span>
+                        </div>
+                    </div>
+                    <div class="row tt">
+                      <a href="{% url 'thanhtoan' %}" class="btn-success btn btn-block col-lg-10">Thanh toán</a>
+                            
+                          
+                    </div>
+                </div>
+
+            </div>
+            </div>
+            </div>
+
+          <div id="checkin" class="container tab-pane fade"><br>
+            <h3>Danh sách nhân viên</h3>
+            <table class="table table-bordered mt-3">
+              <thead>
+                <tr>
+                  
+                </tr>
+              </thead>
+              <tbody>
+                {% if nhanvienins %}
+                      {% for nhanvienin in nhanvienins %}
+                <form method="post">
+                  {% csrf_token %}
+                <tr>
+                  <td>{{ forloop.counter }}</td>
+                  <td>
+                    {{nhanvienin.hoten}}
+                  </td>
+                  <td>
+                    <button type="submit" value="{{nhanvienin.id}}" method="post" name="checkin" class="btn btn-primary" >Checkin</button> 
+                  </td>
+                </tr>
+              </form>
+                {%endfor%}
+                      {%endif%}
+              </tbody>
+            </table>
+          </div>
+
+          <div id="checkout" class="container tab-pane fade"><br>
+            <h3>Danh sách nhân viên</h3>
+            <table class="table table-bordered mt-3">
+              <thead>
+                <tr>
+                  
+                </tr>
+              </thead>
+              <tbody>
+                {% if nhanvienouts %}
+                      {% for nhanvienout in nhanvienouts %}
+                <form method="post">
+                  {% csrf_token %}
+                <tr>
+                  <td>{{ forloop.counter }}</td>
+                  <td>
+                    {{nhanvienout.hoten}}
+                  </td>
+                  <td>
+                    <button type="submit" value="{{nhanvienout.id}}" method="post" name="checkout" class="btn btn-primary" >Checkout</button> 
+                  </td>
+                </tr>
+              </form>
+                {%endfor%}
+                      {%endif%}
+              </tbody>
+            </table>
+        </div>
+
+        </div>
+      
+      
+    
+  
+</div>
+{% endblock main-content %}

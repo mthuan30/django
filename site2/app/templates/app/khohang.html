@@ -1,0 +1,178 @@
+{% extends 'app/trangchu.html' %}
+{% load static %}
+{% block main-content %}
+<div class="title">
+    <h3>Danh sách nguyên liệu</h3>
+    </div>
+  <div class="container-fluid body">
+    <div class="row">
+        <div class="col mt-3">
+            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#myModalThem">Thêm</button>
+            <a href="{% url 'nhaphang'%}" class="btn btn-primary">Thông tin nhập hàng</a>
+            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#myModalTru">Trừ nguyên liệu đã bán</button>
+          </div>
+    </div>
+    <div class="container mt-3">
+        <div class="table-responsive">
+          <table class="table table-bordered mt-3">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Mã</th>
+                <th>Tên</th>
+                <th>Diễn giải</th>
+                <th>Đơn vị tính</th>
+                <th>Số lượng</th>
+                <th>Giá tiền</th>
+                <th>Chọn</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% if khohangs %}
+              {% for khohang in khohangs%}
+              <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{khohang.id}}</td>
+                <td>{{khohang.tennvl}}</td>
+                <td>{{khohang.mota}}</td>
+                <td>{{khohang.dvt}}</td>
+                <td>{{khohang.soluong}}</td>
+                <td>{{khohang.giatien| floatformat:3}}</td>
+                <td>
+                  <a href="{% url 'suakho' khohang.id %}" class="btn btn-warning">Sửa</a>
+                  <button type="button" data-id="{{khohang.id}}" class="btn btn-danger xoakhoname" data-bs-toggle="modal" data-bs-target="#myModalXoa">Xóa</button>
+                </td>
+              </tr>
+              {% endfor %}
+              {% endif %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+     </div>
+            <!-- The Modal Them -->
+<div class="modal fade" id="myModalThem">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+              <h4 class="modal-title">Thêm</h4>
+              {% if er %}
+        <p style="color: red">{{ er }}</p>
+        {% endif %}
+              <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <!-- Modal body -->
+      <div class="modal-body">
+        <form action="" method="post" class="md-6 p-3 mg-3 form">
+          {% csrf_token %}
+            <div class="row">
+              <div class="col">
+                    <input type="radio" name="trangthaithem" class="form-check-input" id="radio2" value="themmoi" checked>Thêm mới
+                    <label class="form-check-label" for="radio2"></label>
+                  </div>
+                <div class="col">
+                    <input type="radio" name="trangthaithem" class="form-check-input" id="radio1" value="themsoluong" >Thêm số lượng
+                    <label class="form-check-label" for="radio1"></label>
+                  </div>
+                  
+            </div>
+            <div class="form-groud py-2">
+              <input type="text" name="ma" id="mathem" class="form-control" disabled="disabled" placeholder="Mã (Đối với Thêm số lượng)">
+            </div>
+            <div class="form-groud py-2">
+              {{form.tennvl}}
+            </div>
+            <div class="form-groud py-2">
+              {{form.mota}}
+            </div>
+            <div class="form-groud py-2">
+              {{form.dvt}}
+            </div>
+            <div class="form-groud py-2">
+              {{form.soluong}}
+            </div>
+            <div class="form-groud py-2">
+              <input type="text" name="soluongmoi" id="slmoi" class="form-control" disabled="disabled" placeholder="Số lượng mới (Đối với Thêm số lượng)">
+            </div>
+            <div class="form-groud py-2">
+              {{form.giatien}}
+            </div>
+            <div class="modal-footer">
+              <button type="submit" name="themhang" class="btn btn-success" data-bs-dismiss="modal">Xác nhận</button>
+              <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Hủy</button>
+            </div>
+          </form>
+      </div>
+            <!-- Modal footer -->
+            
+            </div>
+            </div>
+            </div>
+<!-- The Modal Xoa -->
+<div class="modal fade" id="myModalXoa">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+              <h4 class="modal-title">Bạn có chắc chắn xóa NVL bạn đã chọn</h4>
+              <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <!-- Modal body -->
+  <div class="modal-body">
+    <form id="xoakho" class="md-6 p-3 mg-3 form" method="post">
+      {% csrf_token %}
+        <input type="hidden" name="xoa-kho" id="kho-id">
+        <div class="modal-footer">
+          <button type="submit" name="xoakho" class="btn btn-success " data-bs-dismiss="modal">Có</button>
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Không</button>
+        </div>
+      </form>
+    </div>
+        
+        </div>
+        </div>
+  </div>
+            <!-- Modal footer -->
+            
+            </div>
+            </div>
+            </div>
+
+<!-- The Modal Trừ nguyên liệu -->
+<div class="modal fade" id="myModalTru">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+              <h4 class="modal-title">Sửa</h4>
+              <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <!-- Modal body -->
+      <div class="modal-body">
+        <form action="" method="post" class="md-6 p-3 mg-3 form">
+          {% csrf_token %}
+            <div class="form-groud py-2">
+              <input type="text" name="matru" class="form-control" placeholder="Mã">
+            </div>
+            <div class="form-groud py-2">
+              <input type="text" name="soluongban" class="form-control" placeholder="Số lượng bán">
+            </div>
+            <div class="form-groud py-2">
+                <span>Ngày bán</span>
+                <input type="date" name="ngayban" class="form-control">
+              
+            </div>
+            
+            <div class="modal-footer">
+              <button type="submit" name="trunvl" class="btn btn-success" data-bs-dismiss="modal">Xác nhận</button>
+              <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Hủy</button>
+            </div>
+          </form>
+      </div>
+            <!-- Modal footer -->
+            
+            </div>
+            </div>
+            </div>
+{% endblock main-content %}

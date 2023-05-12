@@ -1,0 +1,106 @@
+{% extends 'app/trangchu.html' %}
+{% load static %}
+{% block main-content %}
+<div class="title">
+    <h3>Doanh thu cửa hàng</h3>
+    </div>
+  <div class="container-fluid body">
+   
+    <div class="container mt-3">
+        <div class="row">
+          <div class="col mt-3">
+              <p>Trạng thái</p>
+          </div>
+          <div class="col mt-3">
+            <p>Chọn ngày</p>
+          </div>
+          
+          <div class="col mt-3">
+            
+          </div>
+        </div>
+        <form method="post">
+          {% csrf_token %}
+        <div class="row">
+          <div class="col">
+            <select class="form-select" id="loaitim-select" name="loaitim-select">
+              <option value="ngay">Ngày</option>
+              <option value="thang">Tháng</option>
+            </select>
+           
+        </div>
+        <div class="col">
+          
+          <input type="date" name="ngay" class="form-control">
+        
+        </div>
+        <div class="col">
+          
+        </div>
+        </div>
+      
+        
+          <button type="submit" class="btn btn-success" data-bs-dismiss="modal">Xem</button>
+        </form>
+        <div class="row">
+          <div class="col mb-3">
+            <div class="input-group">
+              <span class="input-group-text">Tổng doanh thu {{kieu}} {{thangdt}} {{ngay}}</span>
+              <span class="form-control">{{tongtien|floatformat:3}}</span>
+            </div>
+            
+          </div>
+          <div class="col">
+          
+          </div>
+        </div>
+        <div class="row">
+          <h5>Món ăn bán chạy trong tháng {{thang}}</h5>
+        </div>
+        <div class="table-responsive">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Ảnh minh họa</th>
+               
+                <th>Tên</th>
+                
+                
+                
+                
+                
+                <th>Số lượng bán</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% if top10 %}
+              {% for top in top10%}
+              <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>
+                  <img style="width:120px;height:auto;" src="/img/{{top.mon__anh}}" class="card-img-top" alt="...">
+              </td>
+                
+                <td>{{top.mon__tenmon}}</td>
+              
+                <td>{{top.sold_count}}</td>
+                
+                
+              </tr>
+              {%endfor%}
+              {%endif%}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+     </div>
+<footer>
+  
+</footer>
+      
+           
+      
+{% endblock main-content %}
+
